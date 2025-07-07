@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+
+.login-box {
+    max-width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.admin-panel {
+    display: none;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #494f55;
+    color: #fff;
+
+    .nav-link {
+        color: #ffffff;
+
+        &.active,
+        &:hover {
+            color: #fff;
+            background-color: #495057;
+        }
+    }
+}
