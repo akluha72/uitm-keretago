@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item "><a href="/keretago/index.html" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>
+                        <!--<li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
                         <li class="nav-item active"><a href="/keretago/car.jsp" class="nav-link">Cars</a></li>
                         <li class="nav-item"><a href="/keretago/contact.jsp" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="/keretago/my-booking.jsp" class="nav-link">My Booking</a></li>
@@ -75,14 +75,14 @@
                                  style="background-image: url(images/car-1.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1 book-btn"
                                                                   data-name="Perodua Bezza" data-price="100" data-image="images/car-1.jpg">Book
-                                        now</a> <a href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a>
+                                        now</a> <a href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a>
                                 </p>
                             </div>
                         </div>
@@ -93,13 +93,13 @@
                                  style="background-image: url(images/car-2.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Subaru</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -109,13 +109,13 @@
                                  style="background-image: url(images/car-3.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -126,13 +126,13 @@
                                  style="background-image: url(images/car-4.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -142,13 +142,13 @@
                                  style="background-image: url(images/car-5.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Subaru</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -158,13 +158,13 @@
                                  style="background-image: url(images/car-6.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -175,13 +175,13 @@
                                  style="background-image: url(images/car-7.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -191,13 +191,13 @@
                                  style="background-image: url(images/car-8.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Subaru</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -207,13 +207,13 @@
                                  style="background-image: url(images/car-9.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -224,13 +224,13 @@
                                  style="background-image: url(images/car-10.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -240,13 +240,13 @@
                                  style="background-image: url(images/car-11.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Range Rover</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Subaru</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>
@@ -256,13 +256,13 @@
                                  style="background-image: url(images/car-12.jpg);">
                             </div>
                             <div class="text">
-                                <h2 class="mb-0"><a href="car-single.html">Mercedes Grand Sedan</a></h2>
+                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
                                 <div class="d-flex mb-3">
                                     <span class="cat">Cheverolet</span>
                                     <p class="price ml-auto">$500 <span>/day</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.html" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
                             </div>
                         </div>
                     </div>

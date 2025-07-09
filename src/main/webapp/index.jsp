@@ -45,8 +45,8 @@
                         <li class="nav-item active"><a href="/uitm-car-rental-system/index.html" class="nav-link">Home</a></li>
                         <!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li> -->
                         <!-- <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li> -->
-                        <li class="nav-item"><a href="/uitm-car-rental-system/pricing.html" class="nav-link">Pricing</a></li>
-                        <li class="nav-item"><a href="/uitm-car-rental-system/car.html" class="nav-link">Cars</a></li>
+<!--                        <li class="nav-item"><a href="/uitm-car-rental-system/pricing.html" class="nav-link">Pricing</a></li>-->
+                        <li class="nav-item"><a href="/uitm-car-rental-system/car.jsp" class="nav-link">Cars</a></li>
                         <!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
                         <li class="nav-item"><a href="/uitm-car-rental-system/contact.html" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="/uitm-car-rental-system/my-booking.html" class="nav-link">My Booking</a></li>
