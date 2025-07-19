@@ -39,11 +39,11 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"><a href="/keretago/index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item active"><a href="/keretaGo/index.html" class="nav-link">Home</a></li>
                         <!-- <li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
-                        <li class="nav-item"><a href="/keretago/car.jsp" class="nav-link">Cars</a></li>
-                        <li class="nav-item"><a href="/keretago/contact.jsp" class="nav-link">Contact</a></li>
-                        <li class="nav-item"><a href="/keretago/my-booking.jsp" class="nav-link">My Booking</a></li>
+                        <li class="nav-item"><a href="/keretaGo/car.jsp" class="nav-link">Cars</a></li>
+                        <li class="nav-item"><a href="/keretaGo/contact.jsp" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="/keretaGo/my-booking.jsp" class="nav-link">My Booking</a></li>
                     </ul>
                 </div>
             </div>
@@ -70,37 +70,43 @@
         <section class="ftco-section ftco-no-pt bg-light">
             <div class="container">
                 <div class="row no-gutters">
-                    <div class="col-md-12	featured-top">
+                    <div class="col-md-12 featured-top">
                         <div class="row no-gutters">
                             <div class="col-md-4 d-flex align-items-center">
-                                <form action="#" class="request-form ftco-animate bg-primary">
+                                <form action="car.jsp" method="get" class="request-form ftco-animate bg-primary">
                                     <h2>Make your trip</h2>
+
                                     <div class="form-group">
-                                        <label for="" class="label">Pick-up location</label>
-                                        <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+                                        <label for="pickkup_location" class="label">Pick-up location</label>
+                                        <input type="text" class="form-control" name="pickup_location" placeholder="City, Airport, Station, etc">
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="" class="label">Drop-off location</label>
-                                        <input type="text" class="form-control" placeholder="City, Airport, Station, etc">
+                                        <label for="dropoff_location" class="label">Drop-off location</label>
+                                        <input type="text" class="form-control" name="dropoff_location" placeholder="City, Airport, Station, etc">
                                     </div>
+
                                     <div class="d-flex">
                                         <div class="form-group mr-2">
-                                            <label for="" class="label">Pick-up date</label>
-                                            <input type="text" class="form-control" id="book_pick_date" placeholder="Date">
+                                            <label for="pickup_date" class="label">Pick-up date</label>
+                                            <input type="date" class="form-control" name="pickup_date">
                                         </div>
                                         <div class="form-group ml-2">
-                                            <label for="" class="label">Drop-off date</label>
-                                            <input type="text" class="form-control" id="book_off_date" placeholder="Date">
+                                            <label for="dropoff_date" class="label">Drop-off date</label>
+                                            <input type="date" class="form-control" name="dropoff_date">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="" class="label">Pick-up time</label>
-                                        <input type="text" class="form-control" id="time_pick" placeholder="Time">
+                                        <label for="pickup_time" class="label">Pick-up time</label>
+                                        <input type="time" class="form-control" name="pickup_time">
                                     </div>
+
                                     <div class="form-group">
                                         <input type="submit" value="Rent A Car Now" class="btn btn-secondary py-3 px-4">
                                     </div>
                                 </form>
+
                             </div>
                             <div class="col-md-8 d-flex align-items-center">
                                 <div class="services-wrap rounded-right w-100">
@@ -148,7 +154,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12 heading-section text-center ftco-animate mb-5">
                         <span class="subheading">What we offer</span>
-                        <h2 class="mb-2">Feeatured Vehicles</h2>
+                        <h2 class="mb-2">Featured Vehicles</h2>
                     </div>
                 </div>
                 <div class="row">

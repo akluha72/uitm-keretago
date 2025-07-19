@@ -3,10 +3,11 @@ package dao;
 import model.Car;
 import java.sql.*;
 import java.util.*;
+import utils.DBUtils;
 
 public class CarDAO {
 
-    private Connection conn;
+    private final Connection conn;
 
     public CarDAO(Connection conn) {
         this.conn = conn;
@@ -41,6 +42,40 @@ public class CarDAO {
             }
         }
 
+        return cars;
+    }
+
+    // search availabl cars
+// Search available cars (simplified placeholder logic)
+    public List<Car> searchAvailableCars(String pickupLocation, String dropoffLocation, String pickupDate, String dropoffDate, String pickupTime) throws SQLException {
+        List<Car> cars = new ArrayList<>();
+
+        // Since we don't store location, this is a placeholder filter — adjust logic once location is implemented
+        String sql = "SELECT * FROM cars WHERE status = 'available'";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Car car = new Car();
+                car.setId(rs.getInt("id"));
+                car.setMake(rs.getString("make"));
+                car.setModel(rs.getString("model"));
+                car.setYearMade(rs.getInt("year_made"));
+                car.setLicensePlate(rs.getString("license_plate"));
+                car.setDailyRate(rs.getDouble("daily_rate"));
+                car.setMileage(rs.getInt("mileage"));
+                car.setTransmission(rs.getString("transmission"));
+                car.setSeats(rs.getInt("seats"));
+                car.setLuggage(rs.getInt("luggage"));
+                car.setFuelType(rs.getString("fuel_type"));
+                car.setFeatures(rs.getString("features"));
+                car.setImageUrl(rs.getString("image_url"));
+                car.setStatus(rs.getString("status"));
+                car.setCreatedAt(rs.getTimestamp("created_at"));
+                cars.add(car);
+            }
+        }
         return cars;
     }
 
