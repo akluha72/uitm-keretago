@@ -33,7 +33,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand" href="index.html">kereta<span style="text-transform: capitalize;">GO</span></a>
+                <a class="navbar-brand" href="/keretaGo/index">kereta<span style="text-transform: capitalize;">GO</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
@@ -41,8 +41,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="/keretago/index.html" class="nav-link">Home</a></li>
-                        <!-- <li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
+                        <li class="nav-item"><a href="/keretago/index" class="nav-link">Home</a></li>
                         <li class="nav-item"><a href="/keretago/car.jsp" class="nav-link">Cars</a></li>
                         <li class="nav-item active"><a href="/keretago/contact.jsp" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="/keretago/my-booking.jsp" class="nav-link">My Booking</a></li>
@@ -97,18 +96,18 @@
                         </div>
                     </div>
                     <div class="col-md-8 block-9 mb-md-5">
-                        <form action="#" class="bg-light p-5 contact-form">
+                        <form action="contact" method="post" class="bg-light p-5 contact-form">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                                <input type="text" class="form-control" name="full_name" placeholder="Your Name">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Email">
+                                <input type="text" class="form-control" name="email" placeholder="Your Email">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Subject">
+                                <input type="text" class="form-control" name="subject" placeholder="Subject">
                             </div>
                             <div class="form-group">
-                                <textarea name="" id="" cols="30" rows="7" class="form-control"
+                                <textarea name="message" id="" cols="30" rows="7" class="form-control"
                                           placeholder="Message"></textarea>
                             </div>
                             <div class="form-group">
@@ -116,6 +115,11 @@
                             </div>
                         </form>
 
+                        <% if (request.getParameter("success") != null) { %>
+                        <div class="alert alert-success">Message sent successfully!</div>
+                        <% } else if (request.getParameter("error") != null) { %>
+                        <div class="alert alert-danger">Failed to send message. Try again.</div>
+                        <% }%>
                     </div>
                 </div>
                 <div class="row justify-content-center">
