@@ -3,6 +3,8 @@ package dao;
 import model.Car;
 import java.sql.*;
 import java.util.*;
+//import java.util.Date;
+import java.sql.Date;
 import utils.DBUtils;
 
 public class CarDAO {
@@ -47,37 +49,38 @@ public class CarDAO {
         return carList;
     }
 
-    // search availabl cars
-    public List<Car> searchAvailableCars(String pickupLocation, String dropoffLocation, String pickupDate, String dropoffDate, String pickupTime) throws SQLException {
-        List<Car> cars = new ArrayList<>();
+    public static List<Car> getAvailableCarsBetween(java.sql.Date pickupDate, java.sql.Date returnDate) {
+        List<Car> carList = new ArrayList<>();
 
-        // Since we don't store location, this is a placeholder filter — adjust logic once location is implemented
-        String sql = "SELECT * FROM cars WHERE status = 'available'";
+        try (Connection conn = DBUtils.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT * FROM cars WHERE id NOT IN ("
+                        + "    SELECT car_id FROM bookings "
+                        + "    WHERE status = 'active' "
+                        + "    AND NOT (? >= return_date OR ? <= pickup_date)"
+                        + ") AND status = 'available'"
+                )) {
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+            stmt.setDate(1, pickupDate);
+            stmt.setDate(2, returnDate);
 
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Car car = new Car();
                 car.setId(rs.getInt("id"));
                 car.setMake(rs.getString("make"));
                 car.setModel(rs.getString("model"));
-                car.setYearMade(rs.getInt("year_made"));
-                car.setLicensePlate(rs.getString("license_plate"));
                 car.setDailyRate(rs.getDouble("daily_rate"));
-                car.setMileage(rs.getInt("mileage"));
-                car.setTransmission(rs.getString("transmission"));
-                car.setSeats(rs.getInt("seats"));
-                car.setLuggage(rs.getInt("luggage"));
-                car.setFuelType(rs.getString("fuel_type"));
-                car.setFeatures(rs.getString("features"));
                 car.setImageUrl(rs.getString("image_url"));
-                car.setStatus(rs.getString("status"));
-                car.setCreatedAt(rs.getTimestamp("created_at"));
-                cars.add(car);
+//                car.setAvailable(true);
+                carList.add(car);
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return cars;
+
+        return carList;
     }
 
     // Get car by ID

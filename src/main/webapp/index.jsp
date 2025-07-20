@@ -33,7 +33,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand" href="index.html">kereta<span style="text-transform: capitalize;">GO</span></a>
+                <a class="navbar-brand" href="/keretaGo/index">kereta<span style="text-transform: capitalize;">GO</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
@@ -41,7 +41,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"><a href="/keretaGo/index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item active"><a href="/keretaGo/index" class="nav-link">Home</a></li>
                         <!-- <li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
                         <li class="nav-item"><a href="/keretaGo/car.jsp" class="nav-link">Cars</a></li>
                         <li class="nav-item"><a href="/keretaGo/contact.jsp" class="nav-link">Contact</a></li>
@@ -91,11 +91,11 @@
                                     <div class="d-flex">
                                         <div class="form-group mr-2">
                                             <label for="pickup_date" class="label">Pick-up date</label>
-                                            <input type="date" class="form-control" name="pickup_date">
+                                            <input type="date" class="form-control" name="pickup-date">
                                         </div>
                                         <div class="form-group ml-2">
                                             <label for="dropoff_date" class="label">Drop-off date</label>
-                                            <input type="date" class="form-control" name="dropoff_date">
+                                            <input type="date" class="form-control" name="dropoff-date">
                                         </div>
                                     </div>
 
@@ -142,7 +142,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p><a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
+                                    <p><a href="/keretaGo/car.jsp" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
                                 </div>
                             </div>
                         </div>

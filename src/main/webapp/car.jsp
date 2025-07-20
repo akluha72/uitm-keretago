@@ -1,7 +1,39 @@
-<%@page import="dao.CarDAO"%>
-<%@page import="java.util.List"%>
-<%@page import="model.Car"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, model.Car, dao.CarDAO" %>
+<%@ page import="java.util.*, java.text.SimpleDateFormat" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    CarDAO carDAO = new CarDAO();
+    List<Car> carList = carDAO.getAllCars();
+    request.setAttribute("carList", carList);
+%>
+
+
+<%
+    String pickupDateStr = request.getParameter("pickup-date");
+    String dropoffDateStr = request.getParameter("dropoff-date");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    java.sql.Date pickupDate = null;
+    java.sql.Date dropoffDate = null;
+
+    if (pickupDateStr != null && dropoffDateStr != null) {
+        pickupDate = java.sql.Date.valueOf(pickupDateStr);
+        dropoffDate = java.sql.Date.valueOf(dropoffDateStr);
+    }
+
+    CarDAO dao = new CarDAO();
+
+    if (pickupDate != null && dropoffDate != null) {
+        carList = dao.getAvailableCarsBetween(pickupDate, dropoffDate);
+    } else {
+        carList = dao.getAllCars();
+    }
+
+    request.setAttribute("carList", carList);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,13 +62,44 @@
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
+
+        <style>
+            .unavailable-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(0,0,0,0.6);
+                color: white;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                border-radius: 10px;
+            }
+
+            .car-wrap {
+                position: relative;
+            }
+
+            .car-wrap img,
+            .car-wrap .img {
+                filter: grayscale(0%);
+            }
+
+            .car-wrap.unavailable .img {
+                filter: grayscale(70%);
+            }
+        </style>
     </head>
 
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-                <a class="navbar-brand" href="index.html">kereta<span style="text-transform: capitalize;">GO</span></a>
+                <a class="navbar-brand" href="/keretaGo/index">kereta<span style="text-transform: capitalize;">GO</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
@@ -44,7 +107,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item "><a href="/keretaGo/index.jsp" class="nav-link">Home</a></li>
+                        <li class="nav-item "><a href="/keretaGo/index" class="nav-link">Home</a></li>
                         <!--<li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
                         <li class="nav-item active"><a href="/keretaGo/car.jsp" class="nav-link">Cars</a></li>
                         <li class="nav-item"><a href="/keretaGo/contact.jsp" class="nav-link">Contact</a></li>
@@ -71,220 +134,57 @@
 
 
         <section class="ftco-section bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-1.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1 book-btn"
-                                                                  data-name="Perodua Bezza" data-price="100" data-image="images/car-1.jpg">Book
-                                        now</a> <a href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a>
-                                </p>
-                            </div>
-                        </div>
+            <div class="container my-4">
+                <!-- Display Selected Dates (Disabled Inputs) -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="pickup-date" class="form-label">Pickup Date</label>
+                        <input type="date" id="pickup-date" name="pickup-date" 
+                               class="form-control" value="${param['pickup-date']}" disabled />
                     </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-2.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Subaru</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-3.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-4.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-5.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Subaru</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-6.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-7.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-8.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Subaru</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-9.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-10.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-11.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Range Rover</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Subaru</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="car-wrap rounded ftco-animate">
-                            <div class="img rounded d-flex align-items-end"
-                                 style="background-image: url(images/car-12.jpg);">
-                            </div>
-                            <div class="text">
-                                <h2 class="mb-0"><a href="car-single.jsp">Mercedes Grand Sedan</a></h2>
-                                <div class="d-flex mb-3">
-                                    <span class="cat">Cheverolet</span>
-                                    <p class="price ml-auto">$500 <span>/day</span></p>
-                                </div>
-                                <p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">Book now</a> <a
-                                        href="car-single.jsp" class="btn btn-secondary py-2 ml-1">Details</a></p>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <label for="dropoff-date" class="form-label">Dropoff Date</label>
+                        <input type="date" id="dropoff-date" name="dropoff-date" 
+                               class="form-control" value="${param['dropoff-date']}" disabled />
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col text-center">
-                        <div class="block-27">
-                            <ul>
-                                <li><a href="#">&lt;</a></li>
-                                <li class="active"><span>1</span></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">&gt;</a></li>
-                            </ul>
-                        </div>
-                    </div>
+
+                <!-- Car Listings -->
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${empty carList}">
+                            <!-- No available cars message -->
+                            <div class="col-12 text-center">
+                                <div class="alert alert-warning" role="alert">
+                                    🚫 Sorry, no cars are available for the selected dates. Please try different dates.
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="car" items="${carList}">
+                                <div class="col-md-4 mb-4">
+                                    <div class="car-wrap rounded shadow-sm">
+                                        <div class="img rounded d-flex align-items-end"
+                                             style="background-image: url(images/${car.imageUrl}); height: 200px; background-size: cover;">
+                                        </div>
+                                        <div class="text p-3">
+                                            <h2 class="mb-1">
+                                                <a href="car-single.jsp?id=${car.id}">${car.model}</a>
+                                            </h2>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="cat text-muted">${car.make}</span>
+                                                <p class="price font-weight-bold">RM${car.dailyRate} <span class="text-muted">/day</span></p>
+                                            </div>
+                                            <p class="d-flex justify-content-between mb-0">
+                                                <a href="booking.jsp?carId=${car.id}" class="btn btn-primary btn-sm">Book now</a>
+                                                <a href="car-single.jsp?id=${car.id}" class="btn btn-outline-secondary btn-sm">Details</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </section>

@@ -19,7 +19,7 @@ public class Car {
     private String imageUrl;
     private String status;
     private Timestamp createdAt;
-    private String image;
+    private boolean available;
 
     public int getId() {
         return id;
@@ -141,12 +141,11 @@ public class Car {
         this.createdAt = createdAt;
     }
 
-    public String getImage() {
-        return image;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
-
 }
