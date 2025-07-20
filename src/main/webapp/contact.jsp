@@ -41,10 +41,10 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="/keretago/index" class="nav-link">Home</a></li>
-                        <li class="nav-item"><a href="/keretago/car.jsp" class="nav-link">Cars</a></li>
-                        <li class="nav-item active"><a href="/keretago/contact.jsp" class="nav-link">Contact</a></li>
-                        <li class="nav-item"><a href="/keretago/my-booking.jsp" class="nav-link">My Booking</a></li>
+                        <li class="nav-item"><a href="/keretaGo/index" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="/keretaGo/car.jsp" class="nav-link">Cars</a></li>
+                        <li class="nav-item active"><a href="/keretaGo/contact.jsp" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="/keretaGo/my-booking.jsp" class="nav-link">My Booking</a></li>
                     </ul>
                 </div>
             </div>
