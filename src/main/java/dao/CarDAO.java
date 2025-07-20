@@ -13,40 +13,41 @@ public class CarDAO {
         this.conn = conn;
     }
 
-    // Get all available cars
-    public List<Car> getAllAvailableCars() throws SQLException {
-        List<Car> cars = new ArrayList<>();
-        String sql = "SELECT * FROM cars WHERE status = 'available'";
+    public CarDAO() throws SQLException {
+        this.conn = DBUtils.getConnection(); // Get connection from DBUtils
+    }
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+    // Get all available cars
+    public List<Car> getAllCars() {
+        List<Car> carList = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM cars"; // replace 'cars' with your actual table name
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Car car = new Car();
                 car.setId(rs.getInt("id"));
                 car.setMake(rs.getString("make"));
                 car.setModel(rs.getString("model"));
-                car.setYearMade(rs.getInt("year_made"));
-                car.setLicensePlate(rs.getString("license_plate"));
                 car.setDailyRate(rs.getDouble("daily_rate"));
-                car.setMileage(rs.getInt("mileage"));
-                car.setTransmission(rs.getString("transmission"));
-                car.setSeats(rs.getInt("seats"));
-                car.setLuggage(rs.getInt("luggage"));
-                car.setFuelType(rs.getString("fuel_type"));
-                car.setFeatures(rs.getString("features"));
                 car.setImageUrl(rs.getString("image_url"));
-                car.setStatus(rs.getString("status"));
-                car.setCreatedAt(rs.getTimestamp("created_at"));
-                cars.add(car);
+                // add more setters based on your table columns
+
+                carList.add(car);
             }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace(); // or log the error
         }
 
-        return cars;
+        return carList;
     }
 
     // search availabl cars
-// Search available cars (simplified placeholder logic)
     public List<Car> searchAvailableCars(String pickupLocation, String dropoffLocation, String pickupDate, String dropoffDate, String pickupTime) throws SQLException {
         List<Car> cars = new ArrayList<>();
 

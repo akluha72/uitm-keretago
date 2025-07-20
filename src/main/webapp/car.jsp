@@ -31,26 +31,7 @@
         <link rel="stylesheet" href="css/icomoon.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
-    <%
-        String pickupLocation = request.getParameter("pickup_location");
-        String dropoffLocation = request.getParameter("dropoff_location");
-        String pickupDate = request.getParameter("pickup_date");
-        String dropoffDate = request.getParameter("dropoff_date");
-        String pickupTime = request.getParameter("pickup_time");
 
-        List<Car> carList;
-
-        if (pickupLocation != null && !pickupLocation.isEmpty()) {
-            // Filter based on the form
-            carList = CarDAO.searchAvailableCars(pickupLocation, dropoffLocation, pickupDate, dropoffDate, pickupTime);
-        } else {
-            // Show all cars
-            carList = CarDAO.getAllCars();
-        }
-        
-
-        request.setAttribute("carList", carList);
-    %>
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -63,7 +44,7 @@
 
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item "><a href="/keretaGo/index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item "><a href="/keretaGo/index.jsp" class="nav-link">Home</a></li>
                         <!--<li class="nav-item"><a href="/keretago/pricing.jsp" class="nav-link">Pricing</a></li>-->
                         <li class="nav-item active"><a href="/keretaGo/car.jsp" class="nav-link">Cars</a></li>
                         <li class="nav-item"><a href="/keretaGo/contact.jsp" class="nav-link">Contact</a></li>

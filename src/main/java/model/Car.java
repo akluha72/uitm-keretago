@@ -19,6 +19,7 @@ public class Car {
     private String imageUrl;
     private String status;
     private Timestamp createdAt;
+    private String image;
 
     public int getId() {
         return id;
@@ -138,6 +139,14 @@ public class Car {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }
