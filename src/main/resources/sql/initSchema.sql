@@ -25,9 +25,7 @@ CREATE TABLE cars (
     features VARCHAR(255),
     image_url VARCHAR(255),
     status VARCHAR(20) CHECK (status IN ('available', 'booked', 'maintenance')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMPINSERT INTO bookings (car_id, user_email, pickup_date, return_date, pickup_time, status)
-VALUES 
-(1, 'user1@example.com', '2025-07-21', '2025-07-24', '10:00:00', 'active');
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
 
@@ -65,6 +63,11 @@ VALUES
 ('Toyota', 'Vios', 2022, 'JHL4455', 170.00, 12000, 'Automatic', 5, 3, 'Petrol', 'Reverse Camera, ABS, EBD', 'vios.jpg', 'available'),
 ('Perodua', 'Alza', 2023, 'MKH7777', 200.00, 5000, 'Automatic', 7, 4, 'Petrol', '7-Seater, Rear A/C, Parking Sensor', 'alza.jpg', 'maintenance'),
 ('Proton', 'X70', 2023, 'WXK8888', 250.00, 4000, 'Automatic', 5, 4, 'Petrol', 'Sunroof, ADAS, Keyless Entry', 'x70.jpg', 'available');
+
+
+INSERT INTO bookings (car_id, user_email, pickup_date, return_date, pickup_time, status)
+VALUES 
+(1, 'user1@example.com', '2025-07-21', '2025-07-24', '10:00:00', 'active');
 
 
 INSERT INTO bookings (car_id, user_email, pickup_date, return_date, pickup_time, status)

@@ -14,6 +14,11 @@ public class Booking {
     private Time pickupTime;
     private String status;
     private Timestamp createdAt;
+    private String carName;
+    private String brand;
+    private double pricePerDay;
+
+    private Car car;
 
     public int getId() {
         return id;
@@ -77,6 +82,38 @@ public class Booking {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public double getPricePerDay() {
+        return pricePerDay;
+    }
+
+    public void setPricePerDay(double pricePerDay) {
+        this.pricePerDay = pricePerDay;
     }
 
 }
