@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,125 +8,50 @@
         <title>Book Your Car - KeretaGo</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/booking.css">
+
         <style>
             body {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 min-height: 100vh;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
-
-            .booking-container {
-                max-width: 900px;
-                margin: 2rem auto;
-                background: white;
-                border-radius: 15px;
-                box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-                overflow: hidden;
-            }
-
-            .booking-header {
-                background: linear-gradient(45deg, #2c3e50, #3498db);
-                color: white;
-                padding: 2rem;
-                text-align: center;
-            }
-
-            .booking-header h2 {
-                margin-bottom: 0.5rem;
-                font-weight: 600;
-            }
-
-            .car-info {
-                background: #f8f9fa;
-                padding: 1.5rem;
-                border-bottom: 1px solid #dee2e6;
-            }
-
-            .car-image {
-                width: 100%;
-                height: 200px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
-
-            .form-container {
-                padding: 2rem;
-            }
-
-            .form-control, .form-select {
-                border-radius: 8px;
-                border: 2px solid #e9ecef;
-                padding: 0.75rem 1rem;
-                transition: all 0.3s ease;
-            }
-
-            .form-control:focus, .form-select:focus {
-                border-color: #3498db;
-                box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.15);
-            }
-
-            .btn-book {
-                background: linear-gradient(45deg, #3498db, #2980b9);
-                border: none;
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-                font-weight: 600;
-                border-radius: 8px;
-                width: 100%;
-                transition: all 0.3s ease;
-            }
-
-            .btn-book:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
-            }
-
-            .summary-box {
-                background: #e8f4f8;
-                border: 2px solid #3498db;
-                border-radius: 10px;
-                padding: 1.5rem;
-                margin-top: 1.5rem;
-            }
-
-            .price-display {
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: #27ae60;
-            }
-
-            @media (max-width: 768px) {
-                .booking-container {
-                    margin: 1rem;
-                }
-
-                .form-container {
-                    padding: 1.5rem;
-                }
-            }
         </style>
     </head>
+    <%= request.getParameter("carId")%>
     <body>
+
+        <%
+            Object carObj = request.getAttribute("car");
+            out.println("<div style='background:#f8d7da; color:#721c24; padding:10px; border:1px solid #f5c6cb; margin:10px 0;'>");
+            if (carObj == null) {
+                out.println("⚠️ Debug: Car object is <strong>NOT</strong> passed to booking.jsp (null)<br>");
+            } else {
+                out.println("✅ Debug: Car object received<br>");
+                out.println("car.toString() = " + carObj.toString() + "<br>");
+            }
+
+            String carId = request.getParameter("carId");
+            out.println("Request param <strong>carId</strong>: " + carId + "<br>");
+            out.println("</div>");
+        %>
         <div class="booking-container">
-            <!-- Header -->
             <div class="booking-header">
                 <h2><i class="fas fa-car me-2"></i>Complete Your Booking</h2>
                 <p>Fill in the details below to reserve your car</p>
             </div>
 
-            <!-- Car Information (This would be populated from database based on carId) -->
             <div class="car-info">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=400&h=200&fit=crop&crop=center" alt="Selected Car" class="car-image">
+                        <img src="images/${car.imageUrl}" alt="Selected Car" class="car-image">
                     </div>
                     <div class="col-md-8">
-                        <h4 class="mb-2">Premium Sedan</h4>
+                        <h4 class="mb-2">${car.make} ${car.model}</h4>
                         <p class="text-muted mb-2">Perfect for business trips and comfortable city drives</p>
                         <div class="row">
                             <div class="col-6">
-                                <small class="d-block text-muted"><i class="fas fa-users me-1"></i> 5 Passengers</small>
-                                <small class="d-block text-muted"><i class="fas fa-gas-pump me-1"></i> Automatic</small>
+                                <small class="d-block text-muted"><i class="fas fa-users me-1"></i> ${car.seats} Passengers</small>
+                                <small class="d-block text-muted"><i class="fas fa-gas-pump me-1"></i> ${car.transmission}</small>
                             </div>
                             <div class="col-6">
                                 <small class="d-block text-muted"><i class="fas fa-snowflake me-1"></i> Air Conditioning</small>
@@ -133,7 +59,7 @@
                             </div>
                         </div>
                         <div class="mt-2">
-                            <span class="h5 text-primary">RM 80 <small class="text-muted">/day</small></span>
+                            <span class="h5 text-primary">RM ${car.dailyRate} <small class="text-muted">/day</small></span>
                         </div>
                     </div>
                 </div>
@@ -143,7 +69,8 @@
             <div class="form-container">
                 <form action="booking" method="post" id="bookingForm">
                     <!-- Hidden field for car ID -->
-                    <input type="hidden" name="car_id" value="<%= request.getParameter("carId")%>">
+
+                    <input type="hidden" name="car_id" value="${car.id}">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -188,7 +115,7 @@
                                 <p class="mb-1"><strong>Pickup:</strong> <span id="summaryPickup">Please select dates</span></p>
                                 <p class="mb-1"><strong>Return:</strong> <span id="summaryReturn">Please select dates</span></p>
                                 <p class="mb-1"><strong>Duration:</strong> <span id="summaryDuration">- days</span></p>
-                                <p class="mb-0"><strong>Rate:</strong> RM 80 per day</p>
+                                <p class="mb-0"><strong>Rate:</strong> RM ${car.dailyRate} per day</p>
                             </div>
                             <div class="col-md-4 text-end">
                                 <p class="mb-1">Total Amount:</p>
@@ -210,7 +137,9 @@
                 </form>
             </div>
         </div>
-
+        <script>
+            const ratePerDay = ${car.dailyRate};
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script>
             // Set minimum date to today

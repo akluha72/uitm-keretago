@@ -176,7 +176,7 @@
                                                 <p class="price font-weight-bold">RM${car.dailyRate} <span class="text-muted">/day</span></p>
                                             </div>
                                             <p class="d-flex justify-content-between mb-0">
-                                                <a href="booking.jsp?carId=${car.id}" class="btn btn-primary btn-sm">Book now</a>
+                                                <a href="booking-page.jsp?carId=${car.id}" class="btn btn-primary btn-sm">Book now</a>
                                                 <a href="car-single.jsp?id=${car.id}" class="btn btn-outline-secondary btn-sm">Details</a>
                                             </p>
                                         </div>
@@ -189,61 +189,6 @@
             </div>
         </section>
 
-        <!-- custom Booking Modal -->
-        <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-
-                <form id="bookingForm" class="modal-content">
-                    <div class="modal-header">
-                        <div class="d-flex flex-column flex-fill p-2">
-                            <img id="carImage" src="" alt="Car Image" class="img-fluid mb-3"
-                                 style="max-height: 200px; object-fit: cover;">
-                            <!-- <h5 class="modal-title" id="bookingModalLabel">Book Car</h5> -->
-                            <h5 class="modal-title" id="carNameTitle">Book Car</h5>
-                        </div>
-
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="pickupDate">Pickup Date</label>
-                            <input type="date" class="form-control" id="pickupDate" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="returnDate">Return Date</label>
-                            <input type="date" class="form-control" id="returnDate" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userName">Full Name</label>
-                            <input type="text" class="form-control" id="userName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userPhone">Phone</label>
-                            <input type="text" class="form-control" id="userPhone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userEmail">Email</label>
-                            <input type="email" class="form-control" id="userEmail" required>
-                        </div>
-
-                        <p>Price per Day: <strong>RM <span id="pricePerDay">0</span></strong></p>
-                        <p>Total Price: <strong>RM <span id="totalPrice">0</span></strong></p>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirm Booking</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <footer class="ftco-footer ftco-bg-dark ftco-section">
             <div class="container">
