@@ -9,7 +9,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
 CREATE TABLE cars (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     make VARCHAR(50) NOT NULL,
@@ -73,3 +72,8 @@ VALUES
 (1, 'user1@example.com', '2025-07-21', '2025-07-24', '10:00:00', 'active'),
 (2, 'user2@example.com', '2025-07-22', '2025-07-25', '09:00:00', 'active'),
 (3, 'user3@example.com', '2025-07-23', '2025-07-26', '11:30:00', 'active');
+
+INSERT INTO USERS (full_name, email, phone, password, roles) VALUES(
+    'Admin', 'admin@gmail.com', '012345678', 'admin123', 'admin' 
+);
+
