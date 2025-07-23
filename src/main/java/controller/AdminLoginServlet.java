@@ -33,7 +33,7 @@ public class AdminLoginServlet extends HttpServlet {
                     session.setAttribute("isAdmin", true);
                     session.setAttribute("adminEmail", email);
                     session.setAttribute("adminName", rs.getString("full_name"));
-                    response.sendRedirect("admin.jsp");
+                    response.sendRedirect("admin-dashboard");
                 } else {
                     request.setAttribute("error", "Invalid credentials or not an admin.");
                     request.getRequestDispatcher("admin-login.jsp").forward(request, response);

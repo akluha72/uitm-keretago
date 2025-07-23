@@ -31,15 +31,12 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <div class="login-box" id="loginBox">
-            <h2>Admin Login</h2>
-            <input type="text" id="username" placeholder="Username" class="form-control mb-3" required>
-            <input type="password" id="password" placeholder="Password" class="form-control mb-3" required>
-            <button onclick="login()" class="btn btn-primary">Login</button>
-            <p class="error" id="errorMsg"></p>
-        </div>
 
-
+        <%
+            int totalCars = (Integer) request.getAttribute("totalCars");
+            int totalBookings = (Integer) request.getAttribute("totalBookings");
+            int weeklyBookings = (Integer) request.getAttribute("weeklyBookings");
+        %>
         <div class="container-fluid mt-4">
             <div class="admin-panel" id="adminPanel">
                 <div class="row mb-4 align-items-center">
@@ -48,9 +45,7 @@
                         <p class="text-muted">Dashboard overview for your car rental system</p>
                     </div>
                     <div class="col-auto">
-                        <button onclick="logout()" class="btn btn-danger">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
+                        <a href="admin-logout" class="btn btn-danger" ><span> <i class="fas fa-sign-out-alt"></i></span>Logout</a>
                     </div>
                 </div>
 
@@ -85,50 +80,50 @@
                         <!-- Metrics Cards Row -->
                         <div class="row mb-4">
                             <!-- Total Cars Available -->
-                            <div class="col-lg-4 col-md-6 mb-3">
+<!--                            <div class="col-lg-4 col-md-6 mb-3">
                                 <div class="card metric-card card-cars h-100">
                                     <div class="card-body d-flex align-items-center">
                                         <div class="mr-3">
                                             <i class="fas fa-car metric-icon text-success"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <h3 class="metric-number text-success">24</h3>
+                                            <h3 class="metric-number text-success">${totalCars}</h3>
                                             <p class="metric-label">Total Cars Available</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <!-- Total Bookings -->
-                            <div class="col-lg-4 col-md-6 mb-3">
+<!--                            <div class="col-lg-4 col-md-6 mb-3">
                                 <div class="card metric-card card-bookings h-100">
                                     <div class="card-body d-flex align-items-center">
                                         <div class="mr-3">
                                             <i class="fas fa-calendar-check metric-icon text-primary"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <h3 class="metric-number text-primary">156</h3>
+                                            <h3 class="metric-number text-primary">${totalBookings}</h3>
                                             <p class="metric-label">Total Bookings</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <!-- Bookings This Week -->
-                            <div class="col-lg-4 col-md-6 mb-3">
+<!--                            <div class="col-lg-4 col-md-6 mb-3">
                                 <div class="card metric-card card-weekly h-100">
                                     <div class="card-body d-flex align-items-center">
                                         <div class="mr-3">
                                             <i class="fas fa-chart-line metric-icon text-warning"></i>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <h3 class="metric-number text-warning">12</h3>
+                                            <h3 class="metric-number text-warning">${weeklyBookings}</h3>
                                             <p class="metric-label">Bookings This Week</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- Car Management Tab -->
                     <div class="tab-pane fade" id="cars" role="tabpanel">
