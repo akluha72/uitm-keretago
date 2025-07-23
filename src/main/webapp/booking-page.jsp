@@ -17,23 +17,7 @@
             }
         </style>
     </head>
-    <%= request.getParameter("carId")%>
     <body>
-
-        <%
-            Object carObj = request.getAttribute("car");
-            out.println("<div style='background:#f8d7da; color:#721c24; padding:10px; border:1px solid #f5c6cb; margin:10px 0;'>");
-            if (carObj == null) {
-                out.println("⚠️ Debug: Car object is <strong>NOT</strong> passed to booking.jsp (null)<br>");
-            } else {
-                out.println("✅ Debug: Car object received<br>");
-                out.println("car.toString() = " + carObj.toString() + "<br>");
-            }
-
-            String carId = request.getParameter("carId");
-            out.println("Request param <strong>carId</strong>: " + carId + "<br>");
-            out.println("</div>");
-        %>
         <div class="booking-container">
             <div class="booking-header">
                 <h2><i class="fas fa-car me-2"></i>Complete Your Booking</h2>

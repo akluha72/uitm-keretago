@@ -176,7 +176,7 @@
                                                 <p class="price font-weight-bold">RM${car.dailyRate} <span class="text-muted">/day</span></p>
                                             </div>
                                             <p class="d-flex justify-content-between mb-0">
-                                                <a href="booking-page.jsp?carId=${car.id}" class="btn btn-primary btn-sm">Book now</a>
+                                                <a href="booking-page?carId=${car.id}" class="btn btn-primary btn-sm">Book now</a>
                                                 <a href="car-single.jsp?id=${car.id}" class="btn btn-outline-secondary btn-sm">Details</a>
                                             </p>
                                         </div>

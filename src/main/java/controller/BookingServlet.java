@@ -12,7 +12,6 @@ import utils.DBUtils;
 import model.Car;
 
 
-
 @WebServlet("/booking")
 public class BookingServlet extends HttpServlet {
 

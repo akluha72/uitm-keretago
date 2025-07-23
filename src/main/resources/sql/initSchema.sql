@@ -40,10 +40,8 @@ CREATE TABLE bookings (
     status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'completed', 'cancelled')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_car FOREIGN KEY (car_id) REFERENCES cars(id),
-    CONSTRAINT fk_user_email FOREIGN KEY (user_email) REFERENCES users(email)
+    CONSTRAINT fk_car FOREIGN KEY (car_id) REFERENCES cars(id)
 );
-
 
 CREATE TABLE messages (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
