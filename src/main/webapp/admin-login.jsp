@@ -27,10 +27,8 @@
         <div class="login-box">
             <h2>Admin Login</h2>
             <form method="post" action="admin-login">
-                <label>Email:</label><br>
-                <input type="text" name="email"><br>
-                <label>Password:</label><br>
-                <input type="password" name="password"><br><br>
+                <input type="text" placeholder="Username" name="email" class="form-control mb-3" required>
+                <input type="password" placeholder="Password" name="password" class="form-control mb-3" required>
                 <input type="submit" value="Login">
                 <p style="color:red">${error}</p>
             </form>
