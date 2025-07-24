@@ -25,7 +25,6 @@ CREATE TABLE cars (
     image_url VARCHAR(255),
     status VARCHAR(20) CHECK (status IN ('available', 'booked', 'maintenance')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );
 
 

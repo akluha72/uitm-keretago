@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -8,6 +10,8 @@
         <title>Book Your Car - KeretaGo</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
         <link rel="stylesheet" href="css/booking.css">
 
         <style>
@@ -82,12 +86,12 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="pickupDate" class="form-label">Pickup Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="pickupDate" name="pickup_date" required>
+                            <label class="form-label">Pickup Date:</label>
+                            <input type="text" class="form-control" id="pickupDate" name="pickup_date" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="returnDate" class="form-label">Return Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="returnDate" name="return_date" required>
+                            <label class="form-label">Return Date:</label>
+                            <input type="text" class="form-control" id="returnDate" name="return_date" required>
                         </div>
                     </div>
 
@@ -121,10 +125,41 @@
                 </form>
             </div>
         </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             const ratePerDay = ${car.dailyRate};
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Pass booked date ranges from JSP to JavaScript
+            const bookedRanges = [
+            <%
+                for (Map<String, String> range : (List<Map<String, String>>) request.getAttribute("bookedDates")) {
+                    String pickup = range.get("pickup");
+                    String returnDate = range.get("return");
+            %>
+                {from: "<%= pickup%>", to: "<%= returnDate%>"},
+            <% }%>
+            ];
+        </script>
+        <script>
+            flatpickr("#pickupDate", {
+                dateFormat: "Y-m-d",
+                disable: bookedRanges,
+                minDate: "today",
+                onChange: function (selectedDates, dateStr, instance) {
+                    returnPicker.set("minDate", dateStr);
+                }
+            });
+
+            const returnPicker = flatpickr("#returnDate", {
+                dateFormat: "Y-m-d",
+                disable: bookedRanges,
+                minDate: "today"
+            });
+        </script>
+
         <script>
             // Set minimum date to today
             const today = new Date().toISOString().split('T')[0];
