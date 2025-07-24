@@ -39,6 +39,48 @@ function editCar(carId) {
     });
 }
 
+function saveCar() {
+    const carId = $('#carForm').data('car-id'); // If it's for editing
+    const formData = new FormData();
+
+    formData.append('id', carId);
+    formData.append('make', $('#carMake').val());
+    formData.append('model', $('#carModel').val());
+    formData.append('yearMade', $('#carYear').val());
+    formData.append('licensePlate', $('#carLicense').val());
+    formData.append('dailyRate', $('#carRate').val());
+    formData.append('mileage', $('#carMileage').val());
+    formData.append('transmission', $('#carTransmission').val());
+    formData.append('seats', $('#carSeats').val());
+    formData.append('luggage', $('#carLuggage').val());
+    formData.append('fuelType', $('#carFuel').val());
+    formData.append('status', $('#carStatus').val());
+
+    // Handle image if user selected one
+    const file = $('#carImage')[0].files[0];
+    if (file) {
+        formData.append('image', file);
+    }
+
+    $.ajax({
+        url: 'update-car',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            $('#carModal').modal('hide');
+            alert('Car updated successfully!');
+            location.reload();
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            alert('Failed to update car.');
+        }
+    });
+}
+
+
 $('#carImage').on('change', function (event) {
     const file = event.target.files[0];
     if (file) {
