@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import utils.DBUtils;
 import model.Booking;
+import model.Car;
 
 @WebServlet("/admin-dashboard")
 public class AdminDashboardServlet extends HttpServlet {
@@ -48,10 +49,30 @@ public class AdminDashboardServlet extends HttpServlet {
             ResultSet rsWeek = psWeek.executeQuery();
             int weeklyBookings = rsWeek.next() ? rsWeek.getInt(1) : 0;
 
+            // Car Management
+            String carSql = "SELECT * FROM cars";
+            PreparedStatement psAllCars = conn.prepareStatement(carSql);
+            ResultSet rsCars = psAllCars.executeQuery();
+            List<Car> carList = new ArrayList<>();
+            while (rsCars.next()) {
+                Car car = new Car();
+                car.setId(rsCars.getInt("id"));
+                car.setMake(rsCars.getString("make"));
+                car.setModel(rsCars.getString("model"));
+                car.setYearMade(rsCars.getInt("year_made"));
+                car.setLicensePlate(rsCars.getString("license_plate"));
+                car.setDailyRate(rsCars.getDouble("daily_rate"));
+                car.setMileage(rsCars.getInt("mileage"));
+                car.setStatus(rsCars.getString("status"));
+                car.setImageUrl(rsCars.getString("image_url"));
+                carList.add(car);
+            }
+
             // Set attributes
             request.setAttribute("totalCars", totalCars);
             request.setAttribute("totalBookings", totalBookings);
             request.setAttribute("weeklyBookings", weeklyBookings);
+            request.setAttribute("carList", carList);
 
             request.getRequestDispatcher("admin.jsp").forward(request, response);
         } catch (Exception e) {
@@ -59,11 +80,5 @@ public class AdminDashboardServlet extends HttpServlet {
             e.printStackTrace();
             response.sendError(500, "Error loading dashboard");
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response); // Reuse same logic
     }
 }
