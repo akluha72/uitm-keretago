@@ -17,6 +17,18 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Check if user is logged in as admin
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("isAdmin") == null
+                || !(Boolean) session.getAttribute("isAdmin")) {
+            response.sendRedirect("admin-login.jsp");
+            return;
+        }
+
+        System.out.println("AdminDashboard accessed");
+        System.out.println("Session: " + session);
+        System.out.println("isAdmin: " + (session != null ? session.getAttribute("isAdmin") : "no session"));
+
         try (Connection conn = DBUtils.getConnection()) {
             // Total cars available
             String carCountSql = "SELECT COUNT(*) FROM cars";
@@ -42,11 +54,16 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("weeklyBookings", weeklyBookings);
 
             request.getRequestDispatcher("admin.jsp").forward(request, response);
-
         } catch (Exception e) {
             System.out.println("Error in AdminDashboardServlet:");
             e.printStackTrace();
             response.sendError(500, "Error loading dashboard");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response); // Reuse same logic
     }
 }

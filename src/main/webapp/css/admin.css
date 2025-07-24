@@ -17,11 +17,6 @@ body {
     margin-bottom: 20px;
 }
 
-.admin-panel{
-    display: none;
-}
-
-
 .error {
     color: red;
     margin-top: 10px;
