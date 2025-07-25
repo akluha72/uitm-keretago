@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -18,7 +19,6 @@ public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Check if user is logged in as admin
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("isAdmin") == null
                 || !(Boolean) session.getAttribute("isAdmin")) {
@@ -26,12 +26,8 @@ public class AdminDashboardServlet extends HttpServlet {
             return;
         }
 
-        System.out.println("AdminDashboard accessed");
-        System.out.println("Session: " + session);
-        System.out.println("isAdmin: " + (session != null ? session.getAttribute("isAdmin") : "no session"));
-
         try (Connection conn = DBUtils.getConnection()) {
-            // Total cars available
+            // Total cars
             String carCountSql = "SELECT COUNT(*) FROM cars";
             PreparedStatement psCar = conn.prepareStatement(carCountSql);
             ResultSet rsCar = psCar.executeQuery();
@@ -49,7 +45,7 @@ public class AdminDashboardServlet extends HttpServlet {
             ResultSet rsWeek = psWeek.executeQuery();
             int weeklyBookings = rsWeek.next() ? rsWeek.getInt(1) : 0;
 
-            // Car Management
+            // Car list
             String carSql = "SELECT * FROM cars";
             PreparedStatement psAllCars = conn.prepareStatement(carSql);
             ResultSet rsCars = psAllCars.executeQuery();
@@ -68,15 +64,70 @@ public class AdminDashboardServlet extends HttpServlet {
                 carList.add(car);
             }
 
+            // Booking list
+            List<Booking> bookingList = new ArrayList<>();
+            String bookingQuery = "SELECT b.id, b.user_email, c.make, c.model, c.license_plate, c.daily_rate, b.pickup_date, b.return_date,  b.status "
+                    + "FROM bookings b "
+                    + "JOIN cars c ON b.car_id = c.id";
+            PreparedStatement ps = conn.prepareStatement(bookingQuery);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setUserEmail(rs.getString("user_email"));
+                booking.setCarName(rs.getString("make") + " " + rs.getString("model"));
+                booking.setLicensePlate(rs.getString("license_plate"));
+                booking.setPickupDate(rs.getDate("pickup_date"));
+                booking.setReturnDate(rs.getDate("return_date"));
+
+                long days = (rs.getDate("return_date").getTime() - rs.getDate("pickup_date").getTime()) / (1000 * 60 * 60 * 24);
+                double dailyRate = rs.getDouble("daily_rate");
+                double totalAmount = days * dailyRate;
+
+                booking.setStatus(rs.getString("status"));
+                booking.setDurationDays((int) days);
+                booking.setTotalAmount(totalAmount);
+                bookingList.add(booking);
+            }
+
+            // Active Bookings
+            String activeSql = "SELECT COUNT(*) FROM bookings WHERE status = 'active'";
+            PreparedStatement psActive = conn.prepareStatement(activeSql);
+            ResultSet rsActive = psActive.executeQuery();
+            int activeBookings = rsActive.next() ? rsActive.getInt(1) : 0;
+
+            // Due Today (Return date = today)
+            String dueTodaySql = "SELECT COUNT(*) FROM bookings WHERE return_date = CURRENT_DATE";
+            PreparedStatement psDue = conn.prepareStatement(dueTodaySql);
+            ResultSet rsDue = psDue.executeQuery();
+            int dueTodayBookings = rsDue.next() ? rsDue.getInt(1) : 0;
+
+            // Overdue (Return date < today AND status = 'active')
+            String overdueSql = "SELECT COUNT(*) FROM bookings WHERE return_date < CURRENT_DATE AND status = 'active'";
+            PreparedStatement psOverdue = conn.prepareStatement(overdueSql);
+            ResultSet rsOverdue = psOverdue.executeQuery();
+            int overdueBookings = rsOverdue.next() ? rsOverdue.getInt(1) : 0;
+
+            // Revenue this month
+            String revenueSql = "SELECT SUM(total_amount) FROM bookings WHERE MONTH(created_at) = MONTH(CURRENT_DATE) AND YEAR(created_at) = YEAR(CURRENT_DATE)";
+            PreparedStatement psRevenue = conn.prepareStatement(revenueSql);
+            ResultSet rsRevenue = psRevenue.executeQuery();
+            double thisMonthRevenue = rsRevenue.next() ? rsRevenue.getDouble(1) : 0.0;
+
             // Set attributes
             request.setAttribute("totalCars", totalCars);
             request.setAttribute("totalBookings", totalBookings);
             request.setAttribute("weeklyBookings", weeklyBookings);
             request.setAttribute("carList", carList);
+            request.setAttribute("bookingList", bookingList);
+            request.setAttribute("activeBookings", activeBookings);
+            request.setAttribute("dueTodayBookings", dueTodayBookings);
+            request.setAttribute("overdueBookings", overdueBookings);
+            request.setAttribute("thisMonthRevenue", thisMonthRevenue);
 
             request.getRequestDispatcher("admin.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("Error in AdminDashboardServlet:");
             e.printStackTrace();
             response.sendError(500, "Error loading dashboard");
         }

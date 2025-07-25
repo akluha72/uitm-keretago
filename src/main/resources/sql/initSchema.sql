@@ -78,3 +78,4 @@ INSERT INTO USERS (full_name, email, phone, password, roles) VALUES(
     'Admin', 'admin@gmail.com', '012345678', 'admin123', 'admin' 
 );
 
+ALTER TABLE bookings ADD COLUMN total_amount DECIMAL(10, 2);

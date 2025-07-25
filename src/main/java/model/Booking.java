@@ -17,6 +17,10 @@ public class Booking {
     private String carName;
     private String brand;
     private double pricePerDay;
+    private int durationDays;
+    private double totalAmount;
+    private String licensePlate;
+
 
     private Car car;
 
@@ -35,6 +39,7 @@ public class Booking {
     public void setCarId(int carId) {
         this.carId = carId;
     }
+    
 
     public String getUserEmail() {
         return userEmail;
@@ -114,6 +119,30 @@ public class Booking {
 
     public void setPricePerDay(double pricePerDay) {
         this.pricePerDay = pricePerDay;
+    }
+
+    public int getDurationDays() {
+        return durationDays;
+    }
+
+    public void setDurationDays(int durationDays) {
+        this.durationDays = durationDays;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
 }
