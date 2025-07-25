@@ -119,7 +119,7 @@
                                 <h4>Car Management</h4>
                             </div>
                             <div class="col-md-6 text-right">
-                                <button class="btn btn-success" data-toggle="modal" data-target="#carModal" onclick="openCarModal()">
+                                <button class="btn btn-success" data-toggle="modal" data-target="#carModal" onclick="openAddCarModal()">
                                     <i class="fas fa-plus mr-2"></i>Add New Car
                                 </button>
                             </div>
@@ -397,24 +397,24 @@
                                         <h6 class="text-muted mb-3">Basic Information</h6>
                                         <div class="form-group">
                                             <label>Make *</label>
-                                            <input type="text" class="form-control" id="carMake" required>
+                                            <input type="text" name="make" class="form-control" id="carMake" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Model *</label>
-                                            <input type="text" class="form-control" id="carModel" required>
+                                            <input type="text" name="model" class="form-control" id="carModel" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Year *</label>
-                                            <input type="number" class="form-control" id="carYear" min="2000" max="2025"
+                                            <input type="number" name="yearMade" class="form-control" id="carYear" min="2000" max="2025"
                                                    required>
                                         </div>
                                         <div class="form-group">
                                             <label>License Plate *</label>
-                                            <input type="text" class="form-control" id="carLicense" required>
+                                            <input type="text" name="licensePlate" class="form-control" id="carLicense" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Daily Rate ($) *</label>
-                                            <input type="number" class="form-control" id="carRate" min="0" step="0.01" required>
+                                            <input type="number" name="dailyRate" class="form-control" id="carRate" min="0" step="0.01" required>
                                         </div>
                                     </div>
 
@@ -423,11 +423,11 @@
                                         <h6 class="text-muted mb-3">Technical Specifications</h6>
                                         <div class="form-group">
                                             <label>Mileage (km)</label>
-                                            <input type="number" class="form-control" id="carMileage" min="0">
+                                            <input type="number" name="mileage" class="form-control" id="carMileage" min="0">
                                         </div>
                                         <div class="form-group">
                                             <label>Transmission</label>
-                                            <select class="form-control" id="carTransmission">
+                                            <select class="form-control" name="transmission" id="carTransmission">
                                                 <option value="automatic">Automatic</option>
                                                 <option value="manual">Manual</option>
                                                 <option value="cvt">CVT</option>
@@ -435,7 +435,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Number of Seats</label>
-                                            <select class="form-control" id="carSeats">
+                                            <select class="form-control" name="seats" id="carSeats">
                                                 <option value="2">2 Seats</option>
                                                 <option value="4">4 Seats</option>
                                                 <option value="5">5 Seats</option>
@@ -445,7 +445,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Luggage Capacity</label>
-                                            <select class="form-control" id="carLuggage">
+                                            <select class="form-control" name="luggage" id="carLuggage">
                                                 <option value="1">Small (1-2 bags)</option>
                                                 <option value="2">Medium (3-4 bags)</option>
                                                 <option value="3">Large (5+ bags)</option>
@@ -453,7 +453,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Fuel Type</label>
-                                            <select class="form-control" id="carFuel">
+                                            <select class="form-control" name="fuelType" id="carFuel">
                                                 <option value="petrol">Petrol</option>
                                                 <option value="diesel">Diesel</option>
                                                 <option value="hybrid">Hybrid</option>
@@ -468,7 +468,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Status</label>
-                                            <select class="form-control" id="carStatus">
+                                            <select class="form-control" name="status" id="carStatus">
                                                 <option value="available">Available</option>
                                                 <option value="booked">Booked</option>
                                                 <option value="maintenance">Under Maintenance</option>
