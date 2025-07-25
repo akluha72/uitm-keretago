@@ -15,7 +15,7 @@ function editCar(carId) {
             $('#carMileage').val(data.mileage);
             $('#carTransmission').val(data.transmission.toLowerCase());
             $('#carSeats').val(data.seats);
-            $('#carLuggage').val(mapLuggage(data.luggage));
+            $('#carLuggage').val(data.luggage);
             $('#carFuel').val(data.fuelType.toLowerCase());
             $('#carStatus').val(data.status.toLowerCase());
             $('#carPreview').val(data.imageUrl);
@@ -56,12 +56,6 @@ function saveCar() {
     formData.append('fuelType', $('#carFuel').val());
     formData.append('status', $('#carStatus').val());
 
-    // Handle image if user selected one
-    const file = $('#carImage')[0].files[0];
-    if (file) {
-        formData.append('image', file);
-    }
-
     $.ajax({
         url: 'update-car',
         method: 'POST',
@@ -70,7 +64,7 @@ function saveCar() {
         contentType: false,
         success: function (response) {
             $('#carModal').modal('hide');
-            alert('Car updated successfully!');
+            alert('Car updated weh!');
             location.reload();
         },
         error: function (xhr) {
@@ -93,11 +87,3 @@ $('#carImage').on('change', function (event) {
 });
 
 
-
-function mapLuggage(luggageCount) {
-    if (luggageCount <= 2)
-        return 'small';
-    if (luggageCount <= 4)
-        return 'medium';
-    return 'large';
-}

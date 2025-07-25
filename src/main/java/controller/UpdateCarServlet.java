@@ -33,27 +33,13 @@ public class UpdateCarServlet extends HttpServlet {
         int mileage = Integer.parseInt(request.getParameter("mileage"));
         String transmission = request.getParameter("transmission");
         int seats = Integer.parseInt(request.getParameter("seats"));
-        String luggage = request.getParameter("luggage");
+        int luggage = Integer.parseInt(request.getParameter("luggage"));
         String fuelType = request.getParameter("fuelType");
         String status = request.getParameter("status");
 
-        String imageFileName = null;
-        Part filePart = request.getPart("image");
-        if (filePart != null && filePart.getSize() > 0) {
-            imageFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            filePart.write(uploadPath + File.separator + imageFileName);
-        }
 
         try (Connection conn = DBUtils.getConnection()) {
-            String sql = "UPDATE cars SET make=?, model=?, year_made=?, license_plate=?, daily_rate=?, mileage=?, transmission=?, seats=?, luggage=?, fuel_type=?, status=?"
-                    + (imageFileName != null ? ", image_url=?" : "")
-                    + " WHERE id=?";
+            String sql = "UPDATE cars SET make=?, model=?, year_made=?, license_plate=?, daily_rate=?, mileage=?, transmission=?, seats=?, luggage=?, fuel_type=?, status=? WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             int idx = 1;
             stmt.setString(idx++, make);
@@ -64,12 +50,10 @@ public class UpdateCarServlet extends HttpServlet {
             stmt.setInt(idx++, mileage);
             stmt.setString(idx++, transmission);
             stmt.setInt(idx++, seats);
-            stmt.setString(idx++, luggage);
+            stmt.setInt(idx++, luggage);
             stmt.setString(idx++, fuelType);
             stmt.setString(idx++, status);
-            if (imageFileName != null) {
-                stmt.setString(idx++, imageFileName);
-            }
+
             stmt.setInt(idx++, id);
 
             stmt.executeUpdate();

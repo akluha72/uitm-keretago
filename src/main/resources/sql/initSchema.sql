@@ -41,6 +41,8 @@ CREATE TABLE bookings (
     CONSTRAINT fk_car FOREIGN KEY (car_id) REFERENCES cars(id)
 );
 
+
+
 CREATE TABLE messages (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     full_name VARCHAR(100) NOT NULL,

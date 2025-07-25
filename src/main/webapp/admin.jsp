@@ -446,9 +446,9 @@
                                         <div class="form-group">
                                             <label>Luggage Capacity</label>
                                             <select class="form-control" id="carLuggage">
-                                                <option value="small">Small (1-2 bags)</option>
-                                                <option value="medium">Medium (3-4 bags)</option>
-                                                <option value="large">Large (5+ bags)</option>
+                                                <option value="1">Small (1-2 bags)</option>
+                                                <option value="2">Medium (3-4 bags)</option>
+                                                <option value="3">Large (5+ bags)</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -462,22 +462,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <!-- Car Image -->
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <h6 class="text-muted mb-3">Car Image</h6>
-                                        <div class="form-group">
-                                            <label>Upload Car Image</label>
-                                            <br>
-                                            <img id="carPreview" src="https://placehold.co/200x150" class="img-thumbnail mb-2" width="200" height="150">
-                                            <input type="file" class="form-control-file" id="carImage" accept="image/*">
-                                            <small class="form-text text-muted">Recommended size: 400x300px</small>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                
                                 <!-- Status -->
                                 <div class="row mt-3">
                                     <div class="col-md-6">
@@ -485,7 +470,7 @@
                                             <label>Status</label>
                                             <select class="form-control" id="carStatus">
                                                 <option value="available">Available</option>
-                                                <option value="rented">Rented</option>
+                                                <option value="booked">Booked</option>
                                                 <option value="maintenance">Under Maintenance</option>
                                             </select>
                                         </div>
