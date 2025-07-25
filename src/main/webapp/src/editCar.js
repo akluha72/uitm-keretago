@@ -74,16 +74,28 @@ function saveCar() {
     });
 }
 
-
-$('#carImage').on('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            $('#carPreview').attr('src', e.target.result);
-        };
-        reader.readAsDataURL(file);
+function deleteCar(carId) {
+    if (confirm("Are you sure you want to delete this car?")) {
+        fetch('delete-car', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'id=' + encodeURIComponent(carId)
+        })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Car deleted successfully.');
+                        location.reload(); // reload the page to update list
+                    } else {
+                        alert('Failed to delete car.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting car:', error);
+                    alert('Error occurred while deleting car.');
+                });
     }
-});
+}
 
 
