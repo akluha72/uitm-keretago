@@ -20,7 +20,7 @@ public class UpdateBookingServlet extends HttpServlet {
             String bookingIdParam = request.getParameter("booking_id");
             String status = request.getParameter("status");
 
-            // Validate required parameters
+
             if (bookingIdParam == null || status == null) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().write("Missing required parameters: bookingId and status.");
@@ -36,7 +36,7 @@ public class UpdateBookingServlet extends HttpServlet {
                 return;
             }
 
-            // Validate status
+ 
             String[] validStatuses = {"active", "completed", "cancelled"};
             boolean isValidStatus = false;
             for (String validStatus : validStatuses) {
@@ -52,7 +52,7 @@ public class UpdateBookingServlet extends HttpServlet {
             }
 
             try (Connection conn = DBUtils.getConnection()) {
-                // Check if booking exists
+  
                 String checkSql = "SELECT id FROM bookings WHERE id = ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                     checkStmt.setInt(1, bookingId);
@@ -65,7 +65,7 @@ public class UpdateBookingServlet extends HttpServlet {
                     }
                 }
 
-                // Update only the status
+   
                 String updateSql = "UPDATE bookings SET status = ? WHERE id = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
                     updateStmt.setString(1, status.trim());

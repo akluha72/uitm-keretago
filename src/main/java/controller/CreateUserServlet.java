@@ -6,8 +6,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @WebServlet("/create-user")
 public class CreateUserServlet extends HttpServlet {
@@ -66,8 +64,6 @@ public class CreateUserServlet extends HttpServlet {
                 return;
             }
 
-            // Hash the password
-            String hashedPassword = hashPassword(password.trim());
 
             try (Connection conn = DBUtils.getConnection()) {
                 // Check if email already exists
@@ -90,7 +86,7 @@ public class CreateUserServlet extends HttpServlet {
                     insertStmt.setString(1, fullName.trim());
                     insertStmt.setString(2, email.trim().toLowerCase());
                     insertStmt.setString(3, phone != null && !phone.trim().isEmpty() ? phone.trim() : null);
-                    insertStmt.setString(4, hashedPassword);
+                    insertStmt.setString(4, password.trim());
                     insertStmt.setString(5, roles.trim().toLowerCase());
 
                     int rowsAffected = insertStmt.executeUpdate();
@@ -108,7 +104,6 @@ public class CreateUserServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            // Handle specific SQL errors
             String errorMessage = e.getMessage().toLowerCase();
             if (errorMessage.contains("unique") || errorMessage.contains("duplicate")) {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -125,24 +120,6 @@ public class CreateUserServlet extends HttpServlet {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("An unexpected error occurred.");
-        }
-    }
-
-    // Method to hash password using SHA-256
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = md.digest(password.getBytes());
-
-            // Convert bytes to hexadecimal string
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 algorithm not available", e);
         }
     }
 }

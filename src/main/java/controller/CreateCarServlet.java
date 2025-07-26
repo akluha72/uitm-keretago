@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 @WebServlet("/create-car")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, //
         maxFileSize = 5 * 1024 * 1024, // 5MB
         maxRequestSize = 10 * 1024 * 1024) // 10MB
 public class CreateCarServlet extends HttpServlet {
@@ -45,11 +45,11 @@ public class CreateCarServlet extends HttpServlet {
 
             String seatsParam = request.getParameter("seats");
             int seats = (seatsParam != null && !seatsParam.trim().isEmpty())
-                    ? Integer.parseInt(seatsParam) : 5; // default to 5 seats
+                    ? Integer.parseInt(seatsParam) : 5;
 
             String luggageParam = request.getParameter("luggage");
             int luggage = (luggageParam != null && !luggageParam.trim().isEmpty())
-                    ? Integer.parseInt(luggageParam) : 1; // default to small
+                    ? Integer.parseInt(luggageParam) : 1; 
 
             String fuelType = request.getParameter("fuelType");
             String status = request.getParameter("status");

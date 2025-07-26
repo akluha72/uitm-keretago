@@ -30,8 +30,6 @@ public class AvailableCarsServlet extends HttpServlet {
 
         List<Car> availableCars = new ArrayList<>();
         try (Connection conn = DBUtils.getConnection()) {
-            // Fixed SQL query: A booking overlaps if it starts before the requested end date 
-            // AND ends after the requested start date
             String sql = "SELECT * FROM cars WHERE status = 'available' AND id NOT IN ("
                     + "SELECT car_id FROM bookings "
                     + "WHERE pickup_date <= ? AND return_date >= ? "
@@ -44,8 +42,8 @@ public class AvailableCarsServlet extends HttpServlet {
             sql += ")";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setDate(1, Date.valueOf(end));   // pickup_date <= end date
-            stmt.setDate(2, Date.valueOf(start)); // return_date >= start date
+            stmt.setDate(1, Date.valueOf(end)); 
+            stmt.setDate(2, Date.valueOf(start)); 
 
             if (excludeBookingId != null) {
                 stmt.setInt(3, Integer.parseInt(excludeBookingId));

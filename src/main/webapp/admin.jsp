@@ -26,13 +26,19 @@
         <link rel="stylesheet" href="css/admin.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
+    <%
+        String adminName = (String) session.getAttribute("adminName");
+        if (adminName == null || adminName.trim().isEmpty()) {
+            adminName = "who are you?";
+        }
+    %>
     <body>
         <div class="container-fluid mt-4">
             <div class="admin-panel" id="adminPanel">
                 <div class="row mb-4 align-items-center">
                     <div class="col">
-                        <h2 class="text-dark mb-0">Welcome, Admin</h2>
-                        <p class="text-muted">Dashboard overview for your car rental system</p>
+                        <h2 class="text-dark mb-0">Welcome, <%= adminName %></h2>
+                        <p class="text-muted">Car rental system dashboard </p>
                     </div>
                     <div class="col-auto">
                         <a href="admin-logout" class="btn btn-danger" ><span> <i class="fas fa-sign-out-alt"></i></span>Logout</a>

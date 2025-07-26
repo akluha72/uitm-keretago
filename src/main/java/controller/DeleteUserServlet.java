@@ -19,7 +19,7 @@ public class DeleteUserServlet extends HttpServlet {
         try {
             String userIdParam = request.getParameter("user_id");
 
-            // Validate required parameter
+
             if (userIdParam == null || userIdParam.trim().isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().write("Missing required parameter: user_id.");
@@ -36,7 +36,7 @@ public class DeleteUserServlet extends HttpServlet {
             }
 
             try (Connection conn = DBUtils.getConnection()) {
-                // Check if user exists and get user details for additional validation
+    
                 String checkSql = "SELECT id, roles FROM users WHERE id = ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                     checkStmt.setInt(1, userId);
@@ -48,16 +48,9 @@ public class DeleteUserServlet extends HttpServlet {
                         return;
                     }
 
-                    // Optional: Prevent deletion of admin users if needed
-                    // String userRole = rs.getString("roles");
-                    // if ("admin".equals(userRole)) {
-                    //     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    //     response.getWriter().write("Cannot delete admin users.");
-                    //     return;
-                    // }
                 }
 
-                // Optional: Check if user has any related bookings before deletion
+         
                 String checkBookingsSql = "SELECT COUNT(*) FROM bookings WHERE user_email = (SELECT email FROM users WHERE id = ?)";
                 try (PreparedStatement checkBookingsStmt = conn.prepareStatement(checkBookingsSql)) {
                     checkBookingsStmt.setInt(1, userId);

@@ -21,7 +21,7 @@ public class GetUserServlet extends HttpServlet {
         try {
             String userIdParam = request.getParameter("id");
 
-            // Validate required parameter
+    
             if (userIdParam == null || userIdParam.trim().isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().write("{\"error\":\"Missing required parameter: id\"}");
@@ -38,14 +38,13 @@ public class GetUserServlet extends HttpServlet {
             }
 
             try (Connection conn = DBUtils.getConnection()) {
-                // Get user details (excluding password for security)
                 String selectSql = "SELECT id, full_name, email, phone, roles, created_at FROM users WHERE id = ?";
                 try (PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
                     selectStmt.setInt(1, userId);
                     ResultSet rs = selectStmt.executeQuery();
 
                     if (rs.next()) {
-                        // Create JSON object with user data
+    
                         JsonObject userJson = new JsonObject();
                         userJson.addProperty("id", rs.getInt("id"));
                         userJson.addProperty("fullName", rs.getString("full_name"));
@@ -59,7 +58,7 @@ public class GetUserServlet extends HttpServlet {
                         userJson.addProperty("roles", rs.getString("roles"));
                         userJson.addProperty("createdAt", rs.getTimestamp("created_at").toString());
 
-                        // Send JSON response
+       
                         Gson gson = new Gson();
                         response.setStatus(HttpServletResponse.SC_OK);
                         response.getWriter().write(gson.toJson(userJson));

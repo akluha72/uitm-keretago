@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import utils.DBUtils;
 import model.Booking;
 import model.Car;
-import model.User;  // Add this import
+import model.User; 
 
 @WebServlet("/admin-dashboard")
 public class AdminDashboardServlet extends HttpServlet {
@@ -161,7 +161,6 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("overdueBookings", overdueBookings);
             request.setAttribute("thisMonthRevenue", thisMonthRevenue);
 
-            // Set NEW user attributes
             request.setAttribute("totalUsers", totalUsers);
             request.setAttribute("userList", userList);
             request.setAttribute("adminUsers", adminUsers);

@@ -23,7 +23,7 @@ public class AdminLoginServlet extends HttpServlet {
             String sql = "SELECT * FROM users WHERE email = ? AND password = ? AND roles = 'admin'";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, email);
-                stmt.setString(2, password); // You should hash passwords later for security
+                stmt.setString(2, password);
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
@@ -33,7 +33,7 @@ public class AdminLoginServlet extends HttpServlet {
                     session.setAttribute("adminName", rs.getString("full_name"));
                     System.out.println("Login successful, redirecting to dashboard");
 
-                    // Use sendRedirect instead of forward to change the URL
+      
                     response.sendRedirect("admin-dashboard");
                 } else {
                     request.setAttribute("error", "Invalid credentials or not an admin.");
@@ -50,7 +50,6 @@ public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Show login form
         request.getRequestDispatcher("admin-login.jsp").forward(request, response);
     }
 }

@@ -69,7 +69,6 @@ public class DeleteBookingServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            // Handle foreign key constraint violations if there are related records
             String errorMessage = e.getMessage().toLowerCase();
             if (errorMessage.contains("foreign key") || errorMessage.contains("constraint")) {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);

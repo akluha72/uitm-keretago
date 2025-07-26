@@ -77,7 +77,6 @@ public class UpdateUserServlet extends HttpServlet {
             }
 
             try (Connection conn = DBUtils.getConnection()) {
-                // Check if user exists
                 String checkUserSql = "SELECT id FROM users WHERE id = ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkUserSql)) {
                     checkStmt.setInt(1, userId);
@@ -90,7 +89,6 @@ public class UpdateUserServlet extends HttpServlet {
                     }
                 }
 
-                // Check if email already exists for another user
                 String checkEmailSql = "SELECT COUNT(*) FROM users WHERE email = ? AND id != ?";
                 try (PreparedStatement checkStmt = conn.prepareStatement(checkEmailSql)) {
                     checkStmt.setString(1, email.trim().toLowerCase());
@@ -105,7 +103,6 @@ public class UpdateUserServlet extends HttpServlet {
                     }
                 }
 
-                // Determine SQL based on whether password is being updated
                 String updateSql;
                 boolean updatePassword = password != null && !password.trim().isEmpty();
 
@@ -121,8 +118,8 @@ public class UpdateUserServlet extends HttpServlet {
                     updateStmt.setString(3, phone != null && !phone.trim().isEmpty() ? phone.trim() : null);
 
                     if (updatePassword) {
-                        String hashedPassword = hashPassword(password.trim());
-                        updateStmt.setString(4, hashedPassword);
+               
+                        updateStmt.setString(4, password.trim());
                         updateStmt.setString(5, roles.trim().toLowerCase());
                         updateStmt.setInt(6, userId);
                     } else {
@@ -165,21 +162,4 @@ public class UpdateUserServlet extends HttpServlet {
         }
     }
 
-    // Method to hash password using SHA-256
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = md.digest(password.getBytes());
-
-            // Convert bytes to hexadecimal string
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 algorithm not available", e);
-        }
-    }
 }

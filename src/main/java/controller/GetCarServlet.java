@@ -46,7 +46,6 @@ public class GetCarServlet extends HttpServlet {
                 car.setStatus(rs.getString("status"));
                 car.setImageUrl("images/" + rs.getString("image_url"));
 
-                // Convert to JSON
                 String json = new Gson().toJson(car);
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
