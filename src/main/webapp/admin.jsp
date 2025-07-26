@@ -110,6 +110,7 @@
                                 </div>
                             </div>
                         </div>
+                                            
                     </div>
 
                     <!-- Car Management Tab -->
@@ -120,7 +121,7 @@
                                 <h4>Car Management</h4>
                             </div>
                             <div class="col-md-6 text-right">
-                                <button class="btn btn-success" data-toggle="modal" data-target="#carModal" onclick="openAddCarModal()">
+                                <button class="btn btn-success"  onclick="openNewBookingModal()">
                                     <i class="fas fa-plus mr-2"></i>Add New Car
                                 </button>
                             </div>
@@ -203,72 +204,8 @@
                                 </button>
                             </div>
                         </div>
-
-                        <!-- Bookings Table -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th>Booking ID</th>
-                                                <th>Customer</th>
-                                                <th>Car</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Duration</th>
-                                                <th>Total Amount</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="bookingsTableBody">
-                                            <%
-                                                List<Booking> bookings = (List<Booking>) request.getAttribute("bookingList");
-                                                if (bookings != null) {
-                                                    for (Booking b : bookings) {
-                                            %>
-                                            <tr class="<%= b.getStatus().equalsIgnoreCase("overdue") ? "table-danger" : ""%>">
-                                                <td><strong>#BK<%= String.format("%03d", b.getId())%></strong></td>
-                                                <td>
-                                                    <small class="text-muted"><%= b.getUserEmail()%></small>
-                                                </td>
-                                                <td>
-                                                    <%= b.getCarName()%><br>
-                                                    <small class="text-muted"><%= b.getLicensePlate()%></small>
-                                                </td>
-                                                <td><%= b.getPickupDate()%></td>
-                                                <td class="<%= b.getStatus().equalsIgnoreCase("overdue") ? "text-danger font-weight-bold" : ""%>"><%= b.getReturnDate()%></td>
-                                                <td><%= b.getDurationDays()%> days</td>
-                                                <td>RM <%= String.format("%.2f", b.getTotalAmount())%></td>
-                                                <td>
-                                                    <span class="badge badge-<%= b.getStatus().equalsIgnoreCase("active") ? "warning"
-                                                            : b.getStatus().equalsIgnoreCase("completed") ? "success"
-                                                            : b.getStatus().equalsIgnoreCase("overdue") ? "danger" : "secondary"%>">
-                                                        <%= b.getStatus()%>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group btn-group-sm">
-                                                        <button class="btn btn-outline-primary" onclick="editBooking('<%= b.getId()%>')"><i class="fas fa-edit"></i></button>
-                                                        <button class="btn btn-outline-success" onclick="completeBooking('<%= b.getId()%>')"><i class="fas fa-check"></i></button>
-                                                        <button class="btn btn-outline-danger" onclick="cancelBooking('<%= b.getId()%>')"><i class="fas fa-times"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <%
-                                                    }
-                                                }
-                                            %>
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Booking Statistics -->
-                        <div class="row mt-4">
+                        <div class="row mt-4 p-4 ">
                             <div class="col-md-3">
                                 <div class="card border-left-primary">
                                     <div class="card-body">
@@ -323,7 +260,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 ">
                                 <div class="card border-left-success">
                                     <div class="card-body">
                                         <div class="row align-items-center">
@@ -346,6 +283,70 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Bookings Table -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Booking ID</th>
+                                                <th>Customer</th>
+                                                <th>Car</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Duration</th>
+                                                <th>Total Amount</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bookingsTableBody">
+                                            <%
+                                                List<Booking> bookings = (List<Booking>) request.getAttribute("bookingList");
+                                                if (bookings != null) {
+                                                    for (Booking b : bookings) {
+                                            %>
+                                            <tr class="<%= b.getStatus().equalsIgnoreCase("overdue") ? "table-danger" : ""%>">
+                                                <td><strong>#BK<%= String.format("%03d", b.getId())%></strong></td>
+                                                <td>
+                                                    <small class="text-muted"><%= b.getUserEmail()%></small>
+                                                </td>
+                                                <td>
+                                                    <%= b.getCarName()%><br>
+                                                    <small class="text-muted"><%= b.getLicensePlate()%></small>
+                                                </td>
+                                                <td><%= b.getPickupDate()%></td>
+                                                <td class="<%= b.getStatus().equalsIgnoreCase("overdue") ? "text-danger font-weight-bold" : ""%>"><%= b.getReturnDate()%></td>
+                                                <td><%= b.getDurationDays()%> days</td>
+                                                <td>RM <%= String.format("%.2f", b.getTotalAmount())%></td>
+                                                <td>
+                                                    <span class="badge badge-<%= b.getStatus().equalsIgnoreCase("active") ? "warning"
+                                                            : b.getStatus().equalsIgnoreCase("completed") ? "success"
+                                                            : b.getStatus().equalsIgnoreCase("overdue") ? "danger" : "secondary"%>">
+                                                        <%= b.getStatus()%>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary" onclick="editBooking('<%= b.getId()%>')"><i class="fas fa-edit"></i></button>
+                                                        <button class="btn btn-outline-danger" onclick="deleteBooking('<%= b.getId()%>')"><i class="fas fa-times"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -463,14 +464,16 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">New Booking</h5>
+                            <h5 class="modal-title" id="bookingModalTitle">New Booking</h5>
                             <button type="button" class="close" data-dismiss="modal">
                                 <span>&times;</span>
                             </button>
                         </div>
-
                         <div class="modal-body">
                             <form id="bookingForm">
+                                <!-- Hidden field to store booking ID for edit mode -->
+                                <input type="hidden" id="bookingId" value="">
+
                                 <div class="row">
                                     <!-- Customer Email -->
                                     <div class="col-md-6">
@@ -479,19 +482,16 @@
                                             <input type="email" class="form-control" id="customerEmail" required>
                                         </div>
                                     </div>
-
                                     <!-- Select Car -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Select Car *</label>
                                             <select class="form-control" id="bookingCar" required>
                                                 <option value="">Choose a car...</option>
-
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Date Range -->
                                 <div class="row">
                                     <div class="col-md-6">
@@ -507,84 +507,128 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Booking Status -->
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select class="form-control" id="bookingStatus">
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="active" selected>Active</option>
+                                        <option value="active">Active</option>
                                         <option value="completed">Completed</option>
                                         <option value="cancelled">Cancelled</option>
                                     </select>
                                 </div>
+
+                                <!-- Calculation Fields (optional, for display) -->
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Daily Rate</label>
+                                            <input type="number" class="form-control" id="dailyRate" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Days</label>
+                                            <input type="number" class="form-control" id="numberOfDays" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Subtotal</label>
+                                            <input type="number" class="form-control" id="subtotal" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Total</label>
+                                            <input type="number" class="form-control" id="totalAmount" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-success" onclick="saveBooking()">Save Booking</button>
+                            <button type="button" class="btn btn-success" id="saveBookingBtn" onclick="saveBooking()">Save Booking</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
-            <!-- Cancel Booking Modal -->
-            <div class="modal fade" id="cancelBookingModal" tabindex="-1" role="dialog">
+            <!-- Status Edit Modal -->
+            <div class="modal fade" id="statusEditModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Cancel Booking</h5>
+                            <h5 class="modal-title">Edit Booking Status</h5>
                             <button type="button" class="close" data-dismiss="modal">
                                 <span>&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to cancel this booking?</p>
-                            <div class="form-group">
-                                <label>Cancellation Reason</label>
-                                <textarea class="form-control" id="cancellationReason" rows="3"
-                                          placeholder="Please provide a reason for cancellation..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="processRefund">
-                                    <label class="custom-control-label" for="processRefund">Process refund if applicable</label>
+                            <form id="statusForm">
+                                <input type="hidden" id="editBookingId">
+
+                                <!-- Booking Info Display (Read-only with disabled styling) -->
+                                <div class="card mb-3 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-muted">
+                                            <i class="fas fa-info-circle"></i> Booking Details (Read Only)
+                                        </h6>
+
+                                        <!-- Customer Email (Disabled Input) -->
+                                        <div class="form-group">
+                                            <label class="text-muted">Customer Email</label>
+                                            <input type="email" class="form-control" id="displayCustomerEmailInput" disabled>
+                                        </div>
+
+                                        <!-- Car Info (Disabled Input) -->
+                                        <div class="form-group">
+                                            <label class="text-muted">Car</label>
+                                            <input type="text" class="form-control" id="displayCarInfoInput" disabled>
+                                        </div>
+
+                                        <!-- Date Range (Disabled Inputs) -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="text-muted">Pickup Date</label>
+                                                    <input type="date" class="form-control" id="displayPickupDateInput" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="text-muted">Return Date</label>
+                                                    <input type="date" class="form-control" id="displayReturnDateInput" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Booking</button>
-                            <button type="button" class="btn btn-danger" onclick="confirmCancelBooking()">Cancel
-                                Booking</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Confirm Delete</h5>
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span>&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this car? This action cannot be undone.</p>
+                                <!-- Status Selection (ONLY editable field) -->
+                                <div class="form-group">
+                                    <label for="editBookingStatus">
+                                        <strong>Booking Status *</strong>
+                                    </label>
+                                    <select class="form-control form-control-lg" id="editBookingStatus" required>
+                                        <option value="active">Active</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+
+
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                            <button type="button" class="btn btn-primary" onclick="updateBookingStatus()">
+                                <i class="fas fa-save"></i> Update Status
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> 
 
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

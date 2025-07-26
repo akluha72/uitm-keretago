@@ -3,7 +3,6 @@ package controller;
 import com.google.gson.Gson;
 import model.Car;
 import utils.DBUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -19,9 +18,9 @@ public class AvailableCarsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String start = request.getParameter("startDate");
         String end = request.getParameter("endDate");
+        String excludeBookingId = request.getParameter("excludeBookingId");
 
         if (start == null || end == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -30,19 +29,29 @@ public class AvailableCarsServlet extends HttpServlet {
         }
 
         List<Car> availableCars = new ArrayList<>();
-
         try (Connection conn = DBUtils.getConnection()) {
+            // Fixed SQL query: A booking overlaps if it starts before the requested end date 
+            // AND ends after the requested start date
             String sql = "SELECT * FROM cars WHERE status = 'available' AND id NOT IN ("
                     + "SELECT car_id FROM bookings "
-                    + "WHERE NOT (return_date <= ? OR pickup_date >= ?) "
-                    + "AND status IN ('active', 'confirmed', 'pending'))";
+                    + "WHERE pickup_date <= ? AND return_date >= ? "
+                    + "AND status IN ('active', 'confirmed', 'pending')";
+
+            // Exclude current booking when editing
+            if (excludeBookingId != null) {
+                sql += " AND id != ?";
+            }
+            sql += ")";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setDate(1, Date.valueOf(end));
-            stmt.setDate(2, Date.valueOf(start));
+            stmt.setDate(1, Date.valueOf(end));   // pickup_date <= end date
+            stmt.setDate(2, Date.valueOf(start)); // return_date >= start date
+
+            if (excludeBookingId != null) {
+                stmt.setInt(3, Integer.parseInt(excludeBookingId));
+            }
 
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Car car = new Car();
                 car.setId(rs.getInt("id"));
