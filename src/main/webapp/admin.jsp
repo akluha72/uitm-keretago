@@ -1,4 +1,6 @@
 <%@page import="model.Booking"%>
+
+
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -57,6 +59,11 @@
                                     <i class="fas fa-calendar-check mr-2"></i>Booking Management
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="user-tab" data-toggle="tab" href="#users" role="tab">
+                                    <i class="fa-solid fa-users mr-2"></i>Users Management
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -110,7 +117,7 @@
                                 </div>
                             </div>
                         </div>
-                                            
+
                     </div>
 
                     <!-- Car Management Tab -->
@@ -345,8 +352,66 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- User Management -->
+                    <div class="tab-pane fade" id="users" role="tabpanel">
+                        <!-- User Management Header -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h4>User Management</h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button class="btn btn-success" onclick="openNewUserModal()">
+                                    <i class="fas fa-plus mr-2"></i>Add New User
+                                </button>
+                            </div>
+                        </div>
 
+                        <!-- Users Table -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover"><tbody id="usersTableBody">
+                                            <%
+                                                List<model.User> userList = (List<model.User>) request.getAttribute("userList");
+                                                if (userList != null) {
+                                                    for (model.User user : userList) {
+                                            %>
+                                            <tr>
+                                                <td><%= user.getId()%></td>
+                                                <td><strong><%= user.getFullName()%></strong></td>
+                                                <td><%= user.getEmail()%></td>
+                                                <td><%= user.getPhone() != null ? user.getPhone() : "N/A"%></td>
+                                                <td>
+                                                    <% if ("admin".equalsIgnoreCase(user.getRoles())) { %>
+                                                    <span class="badge badge-primary">Admin</span>
+                                                    <% } else { %>
+                                                    <span class="badge badge-info">Staff</span>
+                                                    <% }%>
+                                                </td>
+                                                <td><%= user.getCreatedAt()%></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary" onclick="editUser(<%= user.getId()%>)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(<%= user.getId()%>)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                            } else {
+                                            %>
+                                            <tr><td colspan="7">No users found.</td></tr>
+                                            <% }%>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -630,6 +695,93 @@
                 </div>
             </div> 
 
+            <!-- User Modal (Create/Edit) -->
+            <div class="modal fade" id="userModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="userModalTitle">Add New User</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="userForm">
+                                <input type="hidden" id="userId">
+
+                                <!-- Personal Information -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-user mr-2"></i>Personal Information
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Full Name -->
+                                        <div class="form-group">
+                                            <label for="userFullName">Full Name *</label>
+                                            <input type="text" class="form-control" id="userFullName" required>
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="userEmail">Email *</label>
+                                            <input type="email" class="form-control" id="userEmail" required>
+                                        </div>
+
+                                        <!-- Phone -->
+                                        <div class="form-group">
+                                            <label for="userPhone">Phone</label>
+                                            <input type="tel" class="form-control" id="userPhone" placeholder="+1-234-567-8900">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Account Information -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-cog mr-2"></i>Account Information
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Role -->
+                                        <div class="form-group">
+                                            <label for="userRole">Role *</label>
+                                            <select class="form-control" id="userRole" required>
+                                                <option value="">Select Role</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="staff">Staff</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Password -->
+                                        <div class="form-group">
+                                            <label for="userPassword">Password *</label>
+                                            <input type="password" class="form-control" id="userPassword" required>
+                                            <small class="form-text text-muted">
+                                                <span id="passwordHelpText">Minimum 6 characters required</span>
+                                            </small>
+                                        </div>
+
+                                        <!-- Confirm Password -->
+                                        <div class="form-group">
+                                            <label for="userConfirmPassword">Confirm Password *</label>
+                                            <input type="password" class="form-control" id="userConfirmPassword" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="saveUserBtn" onclick="saveUser()">
+                                <i class="fas fa-save mr-2"></i>Save User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
@@ -652,5 +804,7 @@
             <script src="src/customjs/admin.js"></script>
             <script src="src/editCar.js"></script>
             <script src="src/adminbooking.js"></script>
+            <script src="src/userManagement.js"></script>
+
     </body>
 </html>

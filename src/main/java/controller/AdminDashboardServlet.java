@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 import utils.DBUtils;
 import model.Booking;
 import model.Car;
+import model.User;  // Add this import
 
 @WebServlet("/admin-dashboard")
 public class AdminDashboardServlet extends HttpServlet {
@@ -39,6 +40,12 @@ public class AdminDashboardServlet extends HttpServlet {
             ResultSet rsBooking = psBooking.executeQuery();
             int totalBookings = rsBooking.next() ? rsBooking.getInt(1) : 0;
 
+            // Total users (NEW)
+            String userCountSql = "SELECT COUNT(*) FROM users";
+            PreparedStatement psUser = conn.prepareStatement(userCountSql);
+            ResultSet rsUser = psUser.executeQuery();
+            int totalUsers = rsUser.next() ? rsUser.getInt(1) : 0;
+
             // Bookings this week
             String weeklyBookingSql = "SELECT COUNT(*) FROM bookings WHERE created_at >= {fn TIMESTAMPADD(SQL_TSI_DAY, -7, CURRENT_TIMESTAMP)}";
             PreparedStatement psWeek = conn.prepareStatement(weeklyBookingSql);
@@ -62,6 +69,22 @@ public class AdminDashboardServlet extends HttpServlet {
                 car.setStatus(rsCars.getString("status"));
                 car.setImageUrl(rsCars.getString("image_url"));
                 carList.add(car);
+            }
+
+            // User list (NEW)
+            String userSql = "SELECT id, full_name, email, phone, roles, created_at FROM users ORDER BY created_at DESC";
+            PreparedStatement psAllUsers = conn.prepareStatement(userSql);
+            ResultSet rsUsers = psAllUsers.executeQuery();
+            List<User> userList = new ArrayList<>();
+            while (rsUsers.next()) {
+                User user = new User();
+                user.setId(rsUsers.getInt("id"));
+                user.setFullName(rsUsers.getString("full_name"));
+                user.setEmail(rsUsers.getString("email"));
+                user.setPhone(rsUsers.getString("phone"));
+                user.setRoles(rsUsers.getString("roles"));
+                user.setCreatedAt(rsUsers.getTimestamp("created_at"));
+                userList.add(user);
             }
 
             // Booking list
@@ -115,7 +138,19 @@ public class AdminDashboardServlet extends HttpServlet {
             ResultSet rsRevenue = psRevenue.executeQuery();
             double thisMonthRevenue = rsRevenue.next() ? rsRevenue.getDouble(1) : 0.0;
 
-            // Set attributes
+            // Admin users count (NEW - optional)
+            String adminCountSql = "SELECT COUNT(*) FROM users WHERE roles = 'admin'";
+            PreparedStatement psAdmin = conn.prepareStatement(adminCountSql);
+            ResultSet rsAdmin = psAdmin.executeQuery();
+            int adminUsers = rsAdmin.next() ? rsAdmin.getInt(1) : 0;
+
+            // Staff users count (NEW - optional)
+            String staffCountSql = "SELECT COUNT(*) FROM users WHERE roles = 'staff'";
+            PreparedStatement psStaff = conn.prepareStatement(staffCountSql);
+            ResultSet rsStaff = psStaff.executeQuery();
+            int staffUsers = rsStaff.next() ? rsStaff.getInt(1) : 0;
+
+            // Set existing attributes
             request.setAttribute("totalCars", totalCars);
             request.setAttribute("totalBookings", totalBookings);
             request.setAttribute("weeklyBookings", weeklyBookings);
@@ -125,6 +160,12 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("dueTodayBookings", dueTodayBookings);
             request.setAttribute("overdueBookings", overdueBookings);
             request.setAttribute("thisMonthRevenue", thisMonthRevenue);
+
+            // Set NEW user attributes
+            request.setAttribute("totalUsers", totalUsers);
+            request.setAttribute("userList", userList);
+            request.setAttribute("adminUsers", adminUsers);
+            request.setAttribute("staffUsers", staffUsers);
 
             request.getRequestDispatcher("admin.jsp").forward(request, response);
         } catch (Exception e) {

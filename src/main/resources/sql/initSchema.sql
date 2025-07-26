@@ -5,7 +5,7 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
     password VARCHAR(255) NOT NULL,
-    roles VARCHAR(20) CHECK (roles IN ('admin', 'customer')),
+    roles VARCHAR(20) CHECK (roles IN ('admin', 'staff')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
