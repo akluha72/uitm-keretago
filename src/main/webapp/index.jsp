@@ -147,7 +147,7 @@
         </section>
 
 
-        <section class="ftco-section ftco-no-pt bg-light">
+<!--        <section class="ftco-section ftco-no-pt bg-light">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -186,7 +186,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
 
         <section class="ftco-section ftco-about">
             <div class="container">
@@ -275,7 +275,7 @@
             </div>
         </section>
 
-        <section class="ftco-section ftco-intro" style="background-image: url(images/bg_3.jpg);">
+<!--        <section class="ftco-section ftco-intro" style="background-image: url(images/bg_3.jpg);">
             <div class="overlay"></div>
             <div class="container">
                 <div class="row justify-content-end">
@@ -285,7 +285,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
 
 
         <section class="ftco-section testimony-section bg-light">

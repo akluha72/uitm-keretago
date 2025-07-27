@@ -40,33 +40,6 @@ function editCar(carId) {
 }
 
 function saveCar() {
-    console.log("=== DEBUGGING FORM SUBMISSION ===");
-
-    // Check if form elements exist
-    console.log("Form elements check:");
-    console.log("carMake element:", $('#carMake').length > 0 ? "EXISTS" : "NOT FOUND");
-    console.log("carModel element:", $('#carModel').length > 0 ? "EXISTS" : "NOT FOUND");
-    console.log("carYear element:", $('#carYear').length > 0 ? "EXISTS" : "NOT FOUND");
-    console.log("carLicense element:", $('#carLicense').length > 0 ? "EXISTS" : "NOT FOUND");
-    console.log("carRate element:", $('#carRate').length > 0 ? "EXISTS" : "NOT FOUND");
-
-    // Check values
-    console.log("Form values:");
-    console.log("make:", $('#carMake').val());
-    console.log("model:", $('#carModel').val());
-    console.log("year:", $('#carYear').val());
-    console.log("license:", $('#carLicense').val());
-    console.log("rate:", $('#carRate').val());
-    console.log("mileage:", $('#carMileage').val());
-    console.log("transmission:", $('#carTransmission').val());
-    console.log("seats:", $('#carSeats').val());
-    console.log("luggage:", $('#carLuggage').val());
-    console.log("fuel:", $('#carFuel').val());
-    console.log("status:", $('#carStatus').val());
-
-    // Check if modal is visible
-    console.log("Modal visible:", $('#carModal').is(':visible'));
-
     const carId = $('#carForm').data('car-id');
     const formData = new FormData();
 
@@ -95,7 +68,6 @@ function saveCar() {
     if (isEdit)
         formData.append('id', carId);
 
-    // To see FormData content, convert it to a regular object
     const formDataObj = {};
     for (let [key, value] of formData.entries()) {
         formDataObj[key] = value;
@@ -143,11 +115,20 @@ function deleteCar(carId) {
     }
 }
 
-function openAddCarModal() {
-    $('#carForm')[0].reset();
-    $('#carForm').removeData('car-id');
-    $('#carModalTitle').text('Add New Car');
+function openCarModal(mode = 'add', carId = null) {
+    if (mode === 'edit' && carId) {
+        editCar(carId);
+    } else {
+        addNewCar();
+}
+}
+
+// Alternative simple function to just open the modal
+function showCarModal() {
     $('#carModal').modal('show');
 }
 
-
+// Function to close the modal
+function closeCarModal() {
+    $('#carModal').modal('hide');
+}

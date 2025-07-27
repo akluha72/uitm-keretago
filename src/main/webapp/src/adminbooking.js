@@ -1,4 +1,3 @@
-// Clean JavaScript with proper separation between full edit and status-only edit
 document.addEventListener("DOMContentLoaded", function () {
     const pickupDateInput = document.getElementById("bookingStartDate");
     const returnDateInput = document.getElementById("bookingEndDate");

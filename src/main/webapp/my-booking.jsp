@@ -6,6 +6,8 @@
         <meta charset="UTF-8">
         <title>My Booking</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
         <style>
             .booking-card { margin-bottom: 20px; }
             .modal-backdrop { z-index: 0; }
@@ -13,9 +15,15 @@
     </head>
     <body>
         <div class="container mt-5">
-            <h2 class="mb-4 text-center">My Bookings</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="http://localhost:8080/keretaGo/car.jsp" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left me-2"></i>
+                    Back to Cars List
+                </a>
+                <h2 class="mb-0 text-center flex-grow-1">My Bookings</h2>
+                <div style="width: 150px;"></div> <!-- Spacer to balance layout -->
+            </div>
 
-            <!-- Email Search Form -->
             <form action="my-booking" method="get" class="mb-4">
                 <div class="form-group row justify-content-center">
                     <div class="col-md-6">

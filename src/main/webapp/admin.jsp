@@ -134,7 +134,7 @@
                                 <h4>Car Management</h4>
                             </div>
                             <div class="col-md-6 text-right">
-                                <button class="btn btn-success"  onclick="openNewBookingModal()">
+                                <button class="btn btn-success"  onclick="showCarModal()">
                                     <i class="fas fa-plus mr-2"></i>Add New Car
                                 </button>
                             </div>
